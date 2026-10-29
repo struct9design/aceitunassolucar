@@ -1,0 +1,25 @@
+---
+// Rayos del sol del logo. Giran a 160 s por vuelta (ver .rayos en global.css).
+interface Props {
+  class?: string;
+  style?: string;
+  opacidad?: number;
+  grosor?: number;
+}
+const { class: clase = '', style, opacidad = 1, grosor = 3 } = Astro.props;
+const angulos = Array.from({ length: 24 }, (_, i) => i * 15);
+---
+
+<svg
+  class:list={['rayos pointer-events-none', clase]}
+  style={style}
+  aria-hidden="true"
+  viewBox="0 0 600 600"
+  fill="none"
+  stroke="#1F3A14"
+  stroke-opacity={opacidad}
+  stroke-width={grosor}
+  stroke-linecap="round"
+>
+  {angulos.map((a, i) => <line x1="300" y1={i % 2 ? 30 : 14} x2="300" y2="70" transform={`rotate(${a} 300 300)`} />)}
+</svg>

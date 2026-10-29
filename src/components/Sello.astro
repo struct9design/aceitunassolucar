@@ -1,0 +1,17 @@
+---
+// Sello circular "Tercera generación · desde 1964". Gira a 40 s por vuelta.
+interface Props {
+  class?: string;
+}
+const { class: clase = '' } = Astro.props;
+---
+
+<svg class:list={['sello', clase]} role="img" aria-label="Tercera generación, desde 1964" viewBox="0 0 160 160">
+  <defs><path id="sello-circulo" d="M80,80 m-60,0 a60,60 0 1,1 120,0 a60,60 0 1,1 -120,0"></path></defs>
+  <circle cx="80" cy="80" r="78" fill="#1F3A14"></circle>
+  <circle cx="80" cy="80" r="40" fill="none" stroke="#FBD51B" stroke-width="1"></circle>
+  <text fill="#FBD51B" style="font: 500 12.5px 'Jost', sans-serif; letter-spacing: 3.4px">
+    <textPath href="#sello-circulo">TERCERA GENERACIÓN · DESDE 1964 · </textPath>
+  </text>
+  <text x="80" y="90" text-anchor="middle" fill="#FBD51B" style="font: 400 30px 'Gloock', Georgia, serif">64</text>
+</svg>

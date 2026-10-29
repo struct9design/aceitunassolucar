@@ -1,0 +1,104 @@
+---
+import Base from '../../layouts/Base.astro';
+import TarjetaProducto from '../../components/TarjetaProducto.astro';
+import { categorias, productos, slugCategoria, urlProducto } from '../../lib/catalogo';
+
+const total = productos.length;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Catálogo de Aceitunas Solúcar',
+  itemListElement: productos.map((p, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: p.nombre,
+    url: new URL(urlProducto(p), Astro.site).href,
+  })),
+};
+---
+
+<Base
+  titulo="Nuestras aceitunas"
+  descripcion="Catálogo de aceitunas de mesa y encurtidos de Aceitunas Solúcar: manzanilla, gordal y verdial aliñadas, rellenas, al natural y encurtidos, con los aliños de la casa."
+  jsonLd={jsonLd}
+>
+  <section class="contenedor grid items-end gap-6 pt-12 pb-10 md:gap-10 md:pt-24 md:pb-16 lg:grid-cols-2">
+    <div data-aparece>
+      <p class="etiqueta mb-5 md:mb-7">Catálogo</p>
+      <h1 class="titular m-0 text-[clamp(52px,7.4vw,120px)] leading-[0.95] tracking-[-0.02em]">Nuestras aceitunas</h1>
+    </div>
+    <p class="m-0 max-w-[460px] text-base leading-[1.65] text-secundario md:text-lg" data-aparece>
+      Aceitunas de mesa y encurtidos con los aliños de la casa. Sin extractos ni potenciadores de sabor, como en la tienda de 1964.
+    </p>
+  </section>
+
+  <section class="contenedor">
+    <div class="flex flex-wrap items-center justify-between gap-5 border-y border-profundo py-5">
+      <div role="group" aria-label="Filtrar por tipo" class="flex flex-wrap gap-2.5" data-filtros>
+        <button type="button" class="pildora" aria-pressed="true" data-filtro="todas">Todas</button>
+        {
+          categorias.map((c) => (
+            <button type="button" class="pildora" aria-pressed="false" data-filtro={slugCategoria(c)}>
+              {c}
+            </button>
+          ))
+        }
+      </div>
+      <span class="text-[13px] leading-none font-medium tracking-[0.12em] text-marca uppercase" aria-live="polite" data-cuenta-productos>
+        {total} productos
+      </span>
+    </div>
+  </section>
+
+  <section class="contenedor pt-12 pb-24 md:pt-16 md:pb-[140px]">
+    <div class="grid grid-cols-2 gap-x-3.5 gap-y-10 sm:grid-cols-3 md:gap-x-8 md:gap-y-14 lg:grid-cols-4" data-rejilla>
+      {productos.map((p) => <TarjetaProducto producto={p} />)}
+    </div>
+  </section>
+
+  <section class="bg-oro">
+    <div class="contenedor flex flex-wrap items-center justify-between gap-8 py-16 md:py-24">
+      <div class="max-w-[720px]" data-aparece>
+        <p class="etiqueta mb-3.5 !text-profundo">Hostelería y tiendas</p>
+        <p class="m-0 font-titular text-[clamp(32px,3.6vw,52px)] leading-[1.08]">Formatos grandes para barra y cocina, con reparto diario.</p>
+      </div>
+      <a href="/profesionales/" class="btn btn-primario">Soy profesional</a>
+    </div>
+  </section>
+</Base>
+
+<script>
+  function iniciarFiltros() {
+    const grupo = document.querySelector<HTMLElement>('[data-filtros]');
+    if (!grupo) return;
+    const botones = [...grupo.querySelectorAll<HTMLButtonElement>('[data-filtro]')];
+    const tarjetas = [...document.querySelectorAll<HTMLElement>('[data-rejilla] [data-producto]')];
+    const contador = document.querySelector<HTMLElement>('[data-cuenta-productos]');
+
+    const aplicar = (filtro: string, actualizarUrl = true) => {
+      if (!botones.some((b) => b.dataset.filtro === filtro)) filtro = 'todas';
+      let visibles = 0;
+      for (const t of tarjetas) {
+        const mostrar = filtro === 'todas' || t.dataset.categoria === filtro;
+        t.hidden = !mostrar;
+        if (mostrar) {
+          visibles++;
+          t.classList.add('visible');
+        }
+      }
+      botones.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.filtro === filtro)));
+      if (contador) contador.textContent = `${visibles} ${visibles === 1 ? 'producto' : 'productos'}`;
+      if (actualizarUrl) {
+        const url = new URL(location.href);
+        if (filtro === 'todas') url.searchParams.delete('tipo');
+        else url.searchParams.set('tipo', filtro);
+        history.replaceState(history.state, '', url);
+      }
+    };
+
+    botones.forEach((b) => b.addEventListener('click', () => aplicar(b.dataset.filtro!)));
+    const inicial = new URLSearchParams(location.search).get('tipo');
+    if (inicial) aplicar(inicial, false);
+  }
+  document.addEventListener('astro:page-load', iniciarFiltros);
+</script>

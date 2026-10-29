@@ -1,0 +1,122 @@
+---
+import type { ImageMetadata } from 'astro';
+import Base from '../layouts/Base.astro';
+import Cabecera from '../components/Cabecera.astro';
+import Foto from '../components/Foto.astro';
+import Rayos from '../components/Rayos.astro';
+import verdeo from '../assets/fotos/verdeo-aceitunas.jpg';
+import salmuera from '../assets/fotos/salmuera-tarro.jpg';
+import alino from '../assets/fotos/alino-especias.jpg';
+import envasado from '../assets/fotos/formatos-gama.jpg';
+
+interface Paso {
+  n: string;
+  titulo: string;
+  texto: string;
+  foto?: ImageMetadata;
+  alt: string;
+  hueco: string;
+}
+
+const pasos: Paso[] = [
+  {
+    n: 'I',
+    titulo: 'El verdeo',
+    texto:
+      'Las aceitunas de mesa sevillanas se recogen en verde, entre finales de agosto y octubre, antes de que maduren en el árbol. Así conservan la carne firme y el color.',
+    foto: verdeo,
+    alt: 'Aceitunas verdes en fuentes blancas con ramas de olivo',
+    hueco: 'Foto · recogida de la aceituna verde',
+  },
+  {
+    n: 'II',
+    titulo: 'Endulzado',
+    texto: 'Recién cogida, la aceituna es amarga. Antes de comerla hay que quitarle ese amargor natural con paciencia y agua limpia.',
+    alt: 'Depósitos de endulzado de la aceituna',
+    hueco: 'Foto · depósitos o bidones',
+  },
+  {
+    n: 'III',
+    titulo: 'Salmuera',
+    texto: 'Después reposa en agua con sal durante semanas, hasta que coge su punto de sabor y textura.',
+    foto: salmuera,
+    alt: 'Manzanillas en su salmuera dentro del tarro',
+    hueco: 'Foto · aceituna en salmuera',
+  },
+  {
+    n: 'IV',
+    titulo: 'El aliño de la casa',
+    texto:
+      'Aquí está lo nuestro. Cada variedad recibe su aliño con las recetas de la familia y con ingredientes que se reconocen a simple vista: nada de extractos ni potenciadores de sabor.',
+    foto: alino,
+    alt: 'Ajos, pimentón, comino y aceite junto a un cuenco de barro',
+    hueco: 'Foto · manos aliñando, detalle de especias',
+  },
+  {
+    n: 'V',
+    titulo: 'Envasado y reparto',
+    texto: 'Se envasa y sale cada día hacia más de 200 supermercados, tiendas, bares y restaurantes.',
+    foto: envasado,
+    alt: 'Cubos, tarros y garrafas de Aceitunas Solúcar',
+    hueco: 'Foto · furgoneta de reparto o envasado',
+  },
+];
+---
+
+<Base
+  titulo="Del olivo a la mesa"
+  descripcion="Verdeo, endulzado, salmuera y aliño: los pasos que separan el olivo del cuenco de barro en Aceitunas Solúcar."
+  imagen={alino}
+  cabeceraPropia
+>
+  <section class="relative overflow-hidden bg-oro">
+    <Rayos class="absolute -top-[120px] -right-[260px] size-[560px] md:-top-[200px] md:size-[900px]" opacidad={0.5} grosor={2.5} />
+    <Cabecera />
+    <div class="contenedor relative pt-12 pb-20 md:pt-24 md:pb-[120px]">
+      <p class="etiqueta mb-5 md:mb-7" data-aparece>El proceso</p>
+      <h1 class="titular m-0 max-w-[980px] text-[clamp(52px,7.4vw,120px)] leading-[0.95] tracking-[-0.02em]" data-aparece>Del olivo a la mesa</h1>
+      <p class="mt-7 mb-0 max-w-[560px] text-[17px] leading-relaxed text-secundario md:mt-9 md:text-[19px]" data-aparece>
+        Una aceituna aliñada no se hace en un día. Estos son los pasos que separan el árbol del cuenco de barro.
+      </p>
+    </div>
+  </section>
+
+  <section class="contenedor flex flex-col gap-20 pt-20 pb-16 md:gap-[140px] md:pt-[140px] md:pb-20">
+    {
+      pasos.map((p, i) => (
+        <article class="grid items-center gap-8 md:gap-[72px] lg:grid-cols-2">
+          <div data-aparece class:list={[i % 2 === 1 && 'lg:order-2']}>
+            <Foto
+              src={p.foto}
+              alt={p.alt}
+              hueco={p.hueco}
+              class="aspect-[5/4]"
+              widths={[480, 720, 960, 1280]}
+              sizes="(min-width: 1024px) 580px, 100vw"
+            />
+          </div>
+          <div data-aparece>
+            <span class="romano-contorno block text-[88px] leading-[0.8] md:text-[120px]" aria-hidden="true">
+              {p.n}
+            </span>
+            <h2 class="titular mt-6 mb-4 text-[40px] leading-none md:text-[52px]">
+              <span class="sr-only">Paso {p.n}: </span>
+              {p.titulo}
+            </h2>
+            <p class="m-0 max-w-[480px] text-[17px] leading-[1.65] text-secundario md:text-lg">{p.texto}</p>
+          </div>
+        </article>
+      ))
+    }
+  </section>
+
+  <section class="contenedor pt-16 pb-24 md:pt-20 md:pb-[140px]">
+    <div class="flex flex-wrap items-center justify-between gap-8 border-t border-profundo pt-14" data-aparece>
+      <p class="m-0 max-w-[720px] font-titular text-[clamp(32px,3.6vw,52px)] leading-[1.08]">Lo mejor es probarla.</p>
+      <div class="flex flex-wrap gap-3.5">
+        <a href="/aceitunas/" class="btn btn-primario">Ver nuestras aceitunas</a>
+        <a href="/profesionales/#donde" class="btn btn-secundario">Dónde comprar</a>
+      </div>
+    </div>
+  </section>
+</Base>

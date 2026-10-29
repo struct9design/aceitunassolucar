@@ -1,0 +1,196 @@
+---
+import type { GetStaticPaths } from 'astro';
+import Base from '../../layouts/Base.astro';
+import Foto from '../../components/Foto.astro';
+import TarjetaProducto from '../../components/TarjetaProducto.astro';
+import Txt from '../../components/Txt.astro';
+import { foto, productos, slugCategoria, urlProducto, type Producto } from '../../lib/catalogo';
+
+export const getStaticPaths = (() => productos.map((producto) => ({ params: { slug: producto.slug }, props: { producto } }))) satisfies GetStaticPaths;
+
+interface Props {
+  producto: Producto;
+}
+const { producto: p } = Astro.props;
+
+const img = foto(p.foto);
+const galeria = p.galeria.map((g) => foto(g)).filter((g) => g !== undefined);
+const esTarro = p.foto.startsWith('tarro-');
+
+const esEncurtido = p.categoria === 'Encurtidos';
+const comoTomarla = p.comoTomarla ?? {
+  titular: esEncurtido ? 'Frío, recién sacado de la nevera y en buena compañía.' : 'Fría, en cuenco de barro y con algo para mojar.',
+  ideas: esEncurtido
+    ? ['Con una caña bien tirada o un vermú.', 'Picado en la ensaladilla o en una ensalada de verano.', 'Al lado de unas aceitunas aliñadas, como en la barra.']
+    : ['Con una caña bien tirada o una copa de fino.', 'Picada en la ensaladilla o en unas papas aliñás.', 'Ensartada en una gilda con anchoa y guindilla.'],
+};
+
+// Tres de la misma categoría primero, completando con el resto del catálogo.
+const relacionados = [
+  ...productos.filter((o) => o.slug !== p.slug && o.categoria === p.categoria),
+  ...productos.filter((o) => o.categoria !== p.categoria),
+].slice(0, 3);
+
+const ficha = [
+  ['Variedad', p.variedad],
+  ['Origen', p.origen],
+  ['Ingredientes', p.ingredientes],
+  ['Alérgenos', p.alergenos],
+  ['Conservación', p.conservacion],
+];
+
+const sinCorchetes = (s: string) => s.replace(/\s*\[[^\]]*\]/g, '').trim();
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: p.nombre,
+    description: sinCorchetes(p.descripcion),
+    category: p.categoria,
+    brand: { '@type': 'Brand', name: 'Aceitunas Solúcar' },
+    ...(img && { image: new URL(img.src, Astro.site).href }),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Aceitunas', item: new URL('/aceitunas/', Astro.site).href },
+      { '@type': 'ListItem', position: 2, name: p.nombre, item: new URL(urlProducto(p), Astro.site).href },
+    ],
+  },
+];
+---
+
+<Base titulo={p.nombre} descripcion={`${p.nombre} de Aceitunas Solúcar. ${sinCorchetes(p.descripcion)}`} imagen={img} jsonLd={jsonLd}>
+  <nav aria-label="Ruta" class="contenedor flex flex-wrap gap-2.5 pt-4 text-sm leading-none text-marca md:pt-6">
+    <a href="/aceitunas/" class="text-marca">Aceitunas</a>
+    <span aria-hidden="true">/</span>
+    <a href={`/aceitunas/?tipo=${slugCategoria(p.categoria)}`} class="text-marca no-underline hover:underline">{p.categoria}</a>
+    <span aria-hidden="true">/</span>
+    <span class="text-profundo" aria-current="page">{p.nombre}</span>
+  </nav>
+
+  <section class="contenedor grid items-start gap-12 pt-8 pb-20 md:pt-12 md:pb-[120px] lg:grid-cols-2 lg:gap-[72px]">
+    <div class="flex flex-col gap-4">
+      <div class="flex justify-center bg-oro p-6 md:p-12">
+        <Foto
+          src={img}
+          alt={`${p.nombre} de Aceitunas Solúcar`}
+          hueco="Foto · tarro recortado, fondo limpio"
+          class="filete aspect-[3/4] w-full max-w-[420px]"
+          widths={[360, 540, 720, 960]}
+          sizes="(min-width: 1024px) 420px, 90vw"
+          prioridad
+          transitionName={`foto-${p.slug}`}
+        />
+      </div>
+      {
+        galeria.length > 0 && (
+          <div class="grid grid-cols-3 gap-4">
+            {galeria.map((g) => (
+              <Foto src={g} alt={`${p.nombre} servida`} class="aspect-square" widths={[200, 320, 480]} sizes="(min-width: 1024px) 190px, 30vw" />
+            ))}
+          </div>
+        )
+      }
+    </div>
+
+    <div class="flex flex-col gap-7 lg:pt-4">
+      <span class="etiqueta">{p.categoria} · Nº {p.num}</span>
+      <h1 class="titular m-0 text-[clamp(44px,5.4vw,80px)] leading-[0.98] tracking-[-0.015em]">{p.nombre}</h1>
+      <p class="m-0 text-lg leading-relaxed text-secundario md:text-[19px]"><Txt t={p.descripcion} /></p>
+
+      <div class="flex flex-col gap-3.5" data-formatos>
+        <span class="text-sm leading-none font-semibold">Formato</span>
+        <div role="group" aria-label="Formato" class="flex flex-wrap gap-2.5">
+          {
+            p.formatos.map((f, i) => (
+              <button type="button" class="pildora" aria-pressed={i === 0 ? 'true' : 'false'} data-detalle={f.detalle}>
+                {f.nombre}
+              </button>
+            ))
+          }
+        </div>
+        <span class="text-[15px] leading-normal text-marca" aria-live="polite" data-detalle-formato>
+          <Txt t={p.formatos[0]?.detalle ?? ''} />
+        </span>
+      </div>
+
+      <div class="flex flex-wrap gap-3.5">
+        <a href="/profesionales/#donde" class="btn btn-primario">Dónde comprarla</a>
+        <a href="/profesionales/" class="btn btn-secundario">Pedido profesional</a>
+      </div>
+
+      <div class="mt-3 border border-profundo p-6 outline outline-1 -outline-offset-[7px] outline-profundo md:p-8">
+        <p class="mt-0 mb-[18px] text-center text-[11px] leading-none font-medium tracking-[0.26em] uppercase">Ficha del producto</p>
+        <dl class="m-0 grid grid-cols-[minmax(0,1fr)_minmax(0,2fr)] border-b border-profundo/25 text-[15px] leading-normal">
+          {
+            ficha.map(([dt, dd]) => (
+              <>
+                <dt class="border-t border-profundo/25 py-3 font-semibold">{dt}</dt>
+                <dd class="m-0 border-t border-profundo/25 py-3">
+                  <Txt t={dd} />
+                </dd>
+              </>
+            ))
+          }
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-profundo text-crema">
+    <div class="contenedor grid gap-10 py-20 md:gap-14 md:py-[120px] lg:grid-cols-2">
+      <div data-aparece>
+        <p class="etiqueta mb-[18px] !text-oro">Cómo tomarla</p>
+        <p class="m-0 font-titular text-[clamp(32px,3.6vw,52px)] leading-[1.08]">{comoTomarla.titular}</p>
+      </div>
+      <ol class="m-0 list-none border-b border-oro/35 p-0 text-[17px] leading-relaxed text-crema-claro" data-aparece>
+        {
+          comoTomarla.ideas.map((idea, i) => (
+            <li class="flex gap-6 border-t border-oro/35 py-[22px]">
+              <span class="min-w-10 font-titular text-oro">{['I', 'II', 'III', 'IV'][i]}</span>
+              <span>{idea}</span>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="contenedor pt-20 pb-24 md:pt-[120px] md:pb-[140px]">
+    <h2 class="titular mt-0 mb-10 text-[clamp(36px,4vw,56px)] leading-none md:mb-12" data-aparece>También de la casa</h2>
+    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {relacionados.map((r) => <TarjetaProducto producto={r} variante="relacionado" />)}
+    </div>
+  </section>
+</Base>
+
+<script>
+  function iniciarFormatos() {
+    const bloque = document.querySelector<HTMLElement>('[data-formatos]');
+    if (!bloque) return;
+    const botones = [...bloque.querySelectorAll<HTMLButtonElement>('[data-detalle]')];
+    const detalle = bloque.querySelector<HTMLElement>('[data-detalle-formato]')!;
+    const marcar = (s: string) => {
+      detalle.replaceChildren();
+      // Mantiene resaltado el contenido pendiente [ENTRE CORCHETES].
+      for (const trozo of s.split(/(\[[^\]]+\])/)) {
+        if (!trozo) continue;
+        if (trozo.startsWith('[')) {
+          const span = document.createElement('span');
+          span.className = 'pendiente';
+          span.textContent = trozo;
+          detalle.append(span);
+        } else detalle.append(trozo);
+      }
+    };
+    botones.forEach((b) =>
+      b.addEventListener('click', () => {
+        botones.forEach((o) => o.setAttribute('aria-pressed', String(o === b)));
+        marcar(b.dataset.detalle ?? '');
+      }),
+    );
+  }
+  document.addEventListener('astro:page-load', iniciarFormatos);
+</script>

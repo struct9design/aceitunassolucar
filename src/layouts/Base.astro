@@ -1,0 +1,141 @@
+---
+import type { ImageMetadata } from 'astro';
+import { getImage } from 'astro:assets';
+import { ClientRouter } from 'astro:transitions';
+import Cabecera from '../components/Cabecera.astro';
+import Pie from '../components/Pie.astro';
+import portada from '../assets/fotos/portada-manzanilla-barro.jpg';
+import '../styles/global.css';
+
+interface Props {
+  titulo: string;
+  descripcion: string;
+  imagen?: ImageMetadata;
+  /** La página pinta la cabecera dentro de su portada (Inicio, Proceso). */
+  cabeceraPropia?: boolean;
+  pieCompleto?: boolean;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const { titulo, descripcion, imagen = portada, cabeceraPropia = false, pieCompleto = false, jsonLd } = Astro.props;
+
+const tituloCompleto = titulo === 'Aceitunas Solúcar' ? 'Aceitunas Solúcar · Aliños de toda la vida desde 1964' : `${titulo} · Aceitunas Solúcar`;
+const canonica = new URL(Astro.url.pathname, Astro.site);
+const og = await getImage({ src: imagen, width: 1200, height: 630, fit: 'cover', format: 'jpg' });
+const ogUrl = new URL(og.src, Astro.site);
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{tituloCompleto}</title>
+    <meta name="description" content={descripcion} />
+    <link rel="canonical" href={canonica} />
+    <meta name="theme-color" content="#FBD51B" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:site_name" content="Aceitunas Solúcar" />
+    <meta property="og:title" content={tituloCompleto} />
+    <meta property="og:description" content={descripcion} />
+    <meta property="og:url" content={canonica} />
+    <meta property="og:image" content={ogUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Gloock&family=Jost:wght@400;500;600&display=swap" rel="stylesheet" />
+
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
+    <ClientRouter />
+  </head>
+  <body class="bg-crema text-profundo">
+    <a href="#contenido" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-full focus:bg-profundo focus:px-5 focus:py-3 focus:text-oro">
+      Saltar al contenido
+    </a>
+    {!cabeceraPropia && <Cabecera />}
+    <main id="contenido">
+      <slot />
+    </main>
+    <Pie completo={pieCompleto} />
+
+    <script>
+      const sinMovimiento = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // Aparición suave al entrar en pantalla, escalonada entre hermanos.
+      function iniciarApariciones() {
+        const elementos = [...document.querySelectorAll<HTMLElement>('[data-aparece]:not(.visible)')];
+        if (sinMovimiento() || !('IntersectionObserver' in window)) {
+          elementos.forEach((el) => el.classList.add('visible'));
+          return;
+        }
+        const observador = new IntersectionObserver(
+          (entradas) => {
+            const entrando = entradas.filter((e) => e.isIntersecting).map((e) => e.target as HTMLElement);
+            entrando.forEach((el, i) => {
+              // Escalonado solo entre los que entran a la vez.
+              el.style.setProperty('--retardo', `${Math.min(i, 5) * 0.12}s`);
+              el.classList.add('visible');
+              observador.unobserve(el);
+            });
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.12 },
+        );
+        elementos.forEach((el) => observador.observe(el));
+      }
+
+      // Cifras que cuentan hacia arriba al entrar en pantalla ("1964", "+200").
+      function iniciarContadores() {
+        const cifras = document.querySelectorAll<HTMLElement>('[data-cuenta]');
+        if (sinMovimiento() || !('IntersectionObserver' in window)) return;
+        const observador = new IntersectionObserver(
+          (entradas) => {
+            for (const entrada of entradas) {
+              if (!entrada.isIntersecting) continue;
+              const el = entrada.target as HTMLElement;
+              observador.unobserve(el);
+              const final = Number(el.dataset.cuenta);
+              const desde = Number(el.dataset.desde ?? 0);
+              const prefijo = el.dataset.prefijo ?? '';
+              const duracion = 1600;
+              const inicio = performance.now();
+              const paso = (ahora: number) => {
+                const t = Math.min((ahora - inicio) / duracion, 1);
+                const suavizado = 1 - Math.pow(1 - t, 3);
+                el.textContent = prefijo + Math.round(desde + (final - desde) * suavizado);
+                if (t < 1) requestAnimationFrame(paso);
+              };
+              requestAnimationFrame(paso);
+            }
+          },
+          { threshold: 0.5 },
+        );
+        cifras.forEach((el) => {
+          // El HTML ya trae la cifra final (SEO y sin JS); se reinicia justo antes de animar,
+          // reservando su ancho para que el texto de alrededor no salte.
+          el.style.display = 'inline-block';
+          el.style.minWidth = `${el.getBoundingClientRect().width}px`;
+          el.textContent = (el.dataset.prefijo ?? '') + (el.dataset.desde ?? '0');
+          observador.observe(el);
+        });
+      }
+
+      document.addEventListener('astro:after-swap', () => document.documentElement.classList.add('js'));
+      document.addEventListener('astro:page-load', () => {
+        iniciarApariciones();
+        iniciarContadores();
+      });
+    </script>
+  </body>
+</html>

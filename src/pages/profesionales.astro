@@ -1,0 +1,232 @@
+---
+import Base from '../layouts/Base.astro';
+import Txt from '../components/Txt.astro';
+import sitio from '../data/sitio.json';
+import gama from '../assets/fotos/formatos-gama.jpg';
+
+const segmentos = [
+  { n: 'I', titulo: 'Hostelería', texto: 'Formatos grandes para barra y cocina, y la aceituna de siempre para acompañar cada caña.' },
+  { n: 'II', titulo: 'Tiendas de alimentación', texto: 'Tarros y granel para el mostrador, con reposición frecuente.' },
+  { n: 'III', titulo: 'Supermercados', texto: 'Gama completa de lineal con producto local y reparto diario.' },
+];
+
+const pasos = [
+  { n: '01', titulo: 'Escríbenos', texto: 'Rellena el formulario o llámanos y cuéntanos qué tipo de negocio tienes.' },
+  { n: '02', titulo: 'Te preparamos la propuesta', texto: '[CONFIRMAR: visita comercial, muestras, condiciones.]' },
+  {
+    n: '03',
+    titulo: 'Pide cuando quieras',
+    texto: 'Te damos acceso al portal de clientes para hacer tus pedidos, y te los llevamos en el reparto diario.',
+  },
+];
+
+const d = sitio.direccion;
+const contacto = [
+  { etiqueta: 'Dirección', valor: `${d.calle}\n${d.cp} ${d.localidad}, ${d.provincia}` },
+  { etiqueta: 'Email', valor: sitio.email, href: `mailto:${sitio.email}` },
+  { etiqueta: 'Teléfono', valor: sitio.telefono, href: sitio.telefono.includes('[') ? undefined : `tel:+34${sitio.telefono.replace(/\s/g, '')}` },
+  { etiqueta: 'Horario', valor: sitio.horario },
+];
+---
+
+<Base
+  titulo="Profesionales y contacto"
+  descripcion="Aceitunas aliñadas para hostelería, tiendas de alimentación y supermercados con reparto diario. Encuentra Solúcar cerca de ti o escríbenos."
+  imagen={gama}
+>
+  <section class="contenedor grid items-end gap-10 pt-12 pb-16 md:gap-14 md:pt-24 md:pb-24 lg:grid-cols-2">
+    <div data-aparece>
+      <p class="etiqueta mb-5 md:mb-7">Profesionales</p>
+      <h1 class="titular m-0 text-[clamp(48px,6.4vw,104px)] leading-[0.96] tracking-[-0.02em]">Para tu barra, tu tienda o tu lineal.</h1>
+    </div>
+    <div class="flex flex-col gap-7" data-aparece>
+      <p class="m-0 max-w-[480px] text-[17px] leading-[1.65] text-secundario md:text-lg">
+        Ya estamos en más de 200 negocios y llegamos a cada uno a diario. Si quieres tener Solúcar en el tuyo, cuéntanos qué necesitas.
+      </p>
+      <div class="flex flex-wrap gap-3.5">
+        <a href="#contacto" class="btn btn-primario">Quiero ser cliente</a>
+        <a href={sitio.portalUrl} rel="noopener" class="btn btn-secundario">Ya soy cliente</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-oro">
+    <div class="contenedor grid lg:grid-cols-3">
+      {
+        segmentos.map((s, i) => (
+          <div
+            class:list={[
+              'flex flex-col gap-4 border-profundo/35 py-12 md:pt-16 md:pb-[72px]',
+              i < 2 && 'border-b lg:border-r lg:border-b-0',
+              'lg:px-10 lg:first:pl-0 lg:last:pr-0',
+            ]}
+            data-aparece
+          >
+            <span class="font-titular text-[44px] leading-none">{s.n}</span>
+            <h2 class="titular m-0 text-[34px]">{s.titulo}</h2>
+            <p class="m-0 text-base leading-relaxed">{s.texto}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="contenedor pt-20 pb-20 md:pt-[140px] md:pb-[120px]">
+    <div data-aparece>
+      <p class="etiqueta mb-[18px]">Cómo trabajamos</p>
+      <h2 class="titular mt-0 mb-10 max-w-[760px] text-[clamp(40px,4.6vw,68px)] leading-none md:mb-16">Empezar es fácil</h2>
+    </div>
+    <ol class="m-0 grid list-none gap-10 p-0 md:grid-cols-3">
+      {
+        pasos.map((p) => (
+          <li class="flex flex-col gap-3 border-t border-profundo pt-7" data-aparece>
+            <span class="text-xs leading-none font-medium tracking-[0.2em] text-marca">PASO {p.n}</span>
+            <span class="font-titular text-[30px]">{p.titulo}</span>
+            <span class="text-base leading-relaxed text-secundario">
+              <Txt t={p.texto} />
+            </span>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section id="donde" class="scroll-mt-6 bg-profundo text-crema">
+    <div class="contenedor grid items-center gap-12 py-20 md:gap-16 md:py-[120px] lg:grid-cols-2">
+      <div class="flex flex-col gap-6" data-aparece>
+        <p class="etiqueta m-0 !text-oro">Dónde comprar</p>
+        <h2 class="titular m-0 text-[clamp(40px,4.6vw,68px)] leading-none">Encuentra Solúcar cerca de ti</h2>
+        <p class="m-0 max-w-[460px] text-[17px] leading-[1.65] text-crema-claro">
+          Estamos en supermercados, tiendas de alimentación, bares y restaurantes. Escribe tu localidad y te decimos dónde.
+        </p>
+        <form class="mt-2 flex flex-wrap gap-3" data-buscador data-email={sitio.email}>
+          <label for="loc" class="sr-only">Localidad o código postal</label>
+          <input
+            id="loc"
+            name="localidad"
+            type="text"
+            autocomplete="address-level2"
+            placeholder="Localidad o código postal"
+            required
+            class="h-14 flex-[1_1_240px] rounded-full border border-oro bg-transparent px-6 text-base text-crema placeholder:text-crema-claro/70 focus:outline-2 focus:outline-offset-2 focus:outline-oro"
+          />
+          <button type="submit" class="btn btn-oro h-14 py-0">Buscar</button>
+        </form>
+        <p class="m-0 text-[15px] leading-relaxed text-crema-claro" aria-live="polite" data-buscador-respuesta hidden></p>
+      </div>
+      <div class="relative flex aspect-[4/3] items-center justify-center border border-oro/40 bg-secundario" data-aparece>
+        <span class="bg-oro px-3 py-2 text-[11px] leading-normal font-medium tracking-[0.14em] text-profundo uppercase">
+          Mapa de puntos de venta <span class="pendiente">[PENDIENTE]</span>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <section id="contacto" class="contenedor grid scroll-mt-6 gap-14 py-20 md:gap-20 md:py-[140px] lg:grid-cols-2">
+    <div class="flex flex-col gap-8" data-aparece>
+      <p class="etiqueta m-0">Contacto</p>
+      <h2 class="titular m-0 text-[clamp(40px,4.6vw,68px)] leading-none">Hablemos</h2>
+      <dl class="m-0 border-b border-profundo text-[17px] leading-relaxed">
+        {
+          contacto.map((c) => (
+            <div class="grid grid-cols-[100px_1fr] gap-4 border-t border-profundo py-5 md:grid-cols-[120px_1fr]">
+              <dt class="text-xs leading-[1.8] font-medium tracking-[0.18em] text-marca uppercase">{c.etiqueta}</dt>
+              <dd class="m-0 whitespace-pre-line">
+                {c.href ? <a href={c.href}>{c.valor}</a> : <Txt t={c.valor} />}
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+
+    <form
+      class="grid content-start gap-8 pt-2 sm:grid-cols-2"
+      method="post"
+      action={sitio.formularioAction || undefined}
+      data-contacto
+      data-email={sitio.email}
+      data-aparece
+    >
+      <div class="flex flex-col gap-1.5">
+        <label for="c-nombre" class="text-[13px] leading-none font-medium">Nombre</label>
+        <input id="c-nombre" name="nombre" class="campo" type="text" autocomplete="name" required />
+      </div>
+      <div class="flex flex-col gap-1.5">
+        <label for="c-empresa" class="text-[13px] leading-none font-medium">Empresa</label>
+        <input id="c-empresa" name="empresa" class="campo" type="text" autocomplete="organization" />
+      </div>
+      <div class="flex flex-col gap-1.5">
+        <label for="c-email" class="text-[13px] leading-none font-medium">Email</label>
+        <input id="c-email" name="email" class="campo" type="email" autocomplete="email" required />
+      </div>
+      <div class="flex flex-col gap-1.5">
+        <label for="c-tel" class="text-[13px] leading-none font-medium">Teléfono</label>
+        <input id="c-tel" name="telefono" class="campo" type="tel" autocomplete="tel" />
+      </div>
+      <div class="flex flex-col gap-1.5 sm:col-span-2">
+        <label for="c-tipo" class="text-[13px] leading-none font-medium">Tipo de negocio</label>
+        <select id="c-tipo" name="tipo" class="campo">
+          <option>Bar o restaurante</option>
+          <option>Tienda de alimentación</option>
+          <option>Supermercado</option>
+          <option>Distribuidor</option>
+          <option>Particular</option>
+        </select>
+      </div>
+      <div class="flex flex-col gap-1.5 sm:col-span-2">
+        <label for="c-msg" class="text-[13px] leading-none font-medium">Mensaje</label>
+        <textarea id="c-msg" name="mensaje" class="campo resize-y" rows="4" required></textarea>
+      </div>
+      <div class="flex flex-wrap items-center justify-between gap-5 sm:col-span-2">
+        <label class="flex min-h-11 items-center gap-3 text-sm leading-snug text-secundario">
+          <input type="checkbox" name="privacidad" required class="size-5 accent-profundo" />
+          <span>He leído y acepto la <a href="/privacidad/">política de privacidad</a></span>
+        </label>
+        <button type="submit" class="btn btn-primario px-9">Enviar mensaje</button>
+      </div>
+      <p class="m-0 text-sm text-marca sm:col-span-2" aria-live="polite" data-contacto-respuesta hidden></p>
+    </form>
+  </section>
+</Base>
+
+<script>
+  function iniciarProfesionales() {
+    // Buscador de puntos de venta: pendiente de tener el listado.
+    const buscador = document.querySelector<HTMLFormElement>('[data-buscador]');
+    const respuesta = document.querySelector<HTMLElement>('[data-buscador-respuesta]');
+    buscador?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!respuesta) return;
+      const loc = new FormData(buscador).get('localidad');
+      respuesta.textContent = `Aún estamos preparando el mapa. Escríbenos a ${buscador.dataset.email} y te decimos dónde encontrarnos en ${loc}.`;
+      respuesta.hidden = false;
+    });
+
+    // Contacto: si no hay servicio de envío configurado (sitio.json → formularioAction), abre el correo.
+    const form = document.querySelector<HTMLFormElement>('[data-contacto]');
+    if (!form || form.getAttribute('action')) return;
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const datos = new FormData(form);
+      const campo = (k: string) => String(datos.get(k) ?? '').trim();
+      const asunto = `Contacto web · ${campo('tipo')}${campo('empresa') ? ` · ${campo('empresa')}` : ''}`;
+      const cuerpo = [
+        `Nombre: ${campo('nombre')}`,
+        `Empresa: ${campo('empresa')}`,
+        `Email: ${campo('email')}`,
+        `Teléfono: ${campo('telefono')}`,
+        `Tipo de negocio: ${campo('tipo')}`,
+        '',
+        campo('mensaje'),
+      ].join('\n');
+      location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
+      const aviso = document.querySelector<HTMLElement>('[data-contacto-respuesta]');
+      if (aviso) {
+        aviso.textContent = 'Se ha abierto tu programa de correo con el mensaje preparado. Solo tienes que enviarlo.';
+        aviso.hidden = false;
+      }
+    });
+  }
+  document.addEventListener('astro:page-load', iniciarProfesionales);
+</script>

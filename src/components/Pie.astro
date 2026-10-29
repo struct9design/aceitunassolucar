@@ -1,0 +1,90 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/marca/logo.png';
+import sitio from '../data/sitio.json';
+import Txt from './Txt.astro';
+
+interface Props {
+  completo?: boolean;
+}
+const { completo = false } = Astro.props;
+const d = sitio.direccion;
+const telHref = sitio.telefono.includes('[') ? undefined : `tel:+34${sitio.telefono.replace(/\s/g, '')}`;
+const legales = [
+  { href: '/aviso-legal/', texto: 'Aviso legal' },
+  { href: '/privacidad/', texto: 'Privacidad' },
+  { href: '/cookies/', texto: 'Cookies' },
+];
+---
+
+<footer class="bg-profundo text-crema-claro">
+  {
+    completo ? (
+      <div class="contenedor pt-20 pb-10 md:pt-24">
+        <div class="grid grid-cols-[repeat(auto-fit,minmax(min(200px,100%),1fr))] gap-12">
+          <div class="flex flex-col gap-5">
+            <Image src={logo} alt="Aceitunas Solúcar" width={208} height={208} class="size-[104px]" />
+            <p class="m-0 font-titular text-[22px] leading-tight text-oro">{sitio.lema}</p>
+          </div>
+          <div class="flex flex-col gap-3 text-[15px] leading-relaxed">
+            <span class="etiqueta-sm !text-oro">Visítanos</span>
+            <address class="not-italic">
+              {d.calle}
+              <br />
+              {d.cp} {d.localidad}
+              <br />
+              {d.provincia}
+            </address>
+          </div>
+          <div class="flex flex-col gap-3 text-[15px] leading-relaxed">
+            <span class="etiqueta-sm !text-oro">Escríbenos</span>
+            <a href={`mailto:${sitio.email}`} class="hover:text-oro">
+              {sitio.email}
+            </a>
+            {telHref ? (
+              <a href={telHref} class="hover:text-oro">
+                {sitio.telefono}
+              </a>
+            ) : (
+              <span>
+                <Txt t={sitio.telefono} />
+              </span>
+            )}
+          </div>
+          <nav aria-label="Pie" class="flex flex-col gap-2.5 text-[15px] leading-normal">
+            <span class="etiqueta-sm mb-0.5 !text-oro">La casa</span>
+            <a href="/aceitunas/" class="no-underline hover:text-oro">Aceitunas</a>
+            <a href="/nuestra-historia/" class="no-underline hover:text-oro">Nuestra historia</a>
+            <a href="/del-olivo-a-la-mesa/" class="no-underline hover:text-oro">Del olivo a la mesa</a>
+            <a href="/profesionales/" class="no-underline hover:text-oro">Profesionales</a>
+          </nav>
+        </div>
+        <div class="mt-20 flex flex-wrap justify-between gap-4 border-t border-crema-claro/25 pt-6 text-[13px] leading-normal">
+          <span>© {new Date().getFullYear()} Aceitunas Solúcar · Sanlúcar la Mayor</span>
+          <div class="flex flex-wrap gap-6">
+            {legales.map((l) => (
+              <a href={l.href} class="hover:text-oro">{l.texto}</a>
+            ))}
+            <a href={sitio.portalUrl} rel="noopener" class="hover:text-oro">Acceso clientes</a>
+          </div>
+        </div>
+      </div>
+    ) : (
+      <div class="contenedor flex flex-wrap items-center justify-between gap-6 py-14 text-sm leading-relaxed">
+        <div class="flex items-center gap-[18px]">
+          <Image src={logo} alt="Aceitunas Solúcar" width={128} height={128} class="size-16" />
+          <span>
+            {d.calle} · {d.cp} {d.localidad}, {d.provincia}
+          </span>
+        </div>
+        <div class="flex flex-wrap gap-6">
+          <a href={`mailto:${sitio.email}`} class="hover:text-oro">{sitio.email}</a>
+          {legales.slice(0, 2).map((l) => (
+            <a href={l.href} class="hover:text-oro">{l.texto}</a>
+          ))}
+          <a href={sitio.portalUrl} rel="noopener" class="hover:text-oro">Acceso clientes</a>
+        </div>
+      </div>
+    )
+  }
+</footer>

@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base titulo="Página no encontrada" descripcion="La página que buscas no existe.">
+  <section class="contenedor flex flex-col items-start gap-8 pt-16 pb-28 md:pt-28 md:pb-[160px]">
+    <p class="etiqueta m-0">Error 404</p>
+    <h1 class="titular m-0 max-w-[900px] text-[clamp(48px,7vw,110px)] leading-[0.95]">Esta aceituna no está en la orza.</h1>
+    <p class="m-0 max-w-[520px] text-lg leading-relaxed text-secundario">La página que buscas no existe o ha cambiado de sitio.</p>
+    <div class="flex flex-wrap gap-3.5">
+      <a href="/" class="btn btn-primario">Volver al inicio</a>
+      <a href="/aceitunas/" class="btn btn-secundario">Ver nuestras aceitunas</a>
+    </div>
+  </section>
+</Base>

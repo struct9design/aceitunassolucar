@@ -1,0 +1,65 @@
+---
+import Foto from './Foto.astro';
+import Txt from './Txt.astro';
+import { foto, formatosResumen, slugCategoria, urlProducto, type Producto } from '../lib/catalogo';
+
+interface Props {
+  producto: Producto;
+  /** catalogo: con número, resumen y formatos · inicio: con resumen · relacionado: solo nombre, foto 4:3 */
+  variante?: 'catalogo' | 'inicio' | 'relacionado';
+  titulo?: string;
+  resumen?: string;
+  href?: string;
+  categoria?: string;
+}
+
+const { producto: p, variante = 'catalogo', titulo = p.nombre, resumen = p.resumen, href = urlProducto(p), categoria = p.categoria } = Astro.props;
+const img = foto(p.foto);
+const esTarro = p.foto.startsWith('tarro-');
+const relacionado = variante === 'relacionado';
+const Titulo = variante === 'catalogo' ? 'h2' : 'h3';
+---
+
+<a
+  href={href}
+  class="sube flex flex-col gap-2.5 no-underline md:gap-3.5"
+  data-aparece
+  data-producto
+  data-categoria={slugCategoria(p.categoria)}
+>
+  <Foto
+    src={img}
+    alt={titulo}
+    hueco={`Foto · ${titulo}`}
+    class:list={['filete', relacionado ? 'aspect-[4/3]' : 'aspect-[3/4]']}
+    contener={relacionado && esTarro}
+    widths={[320, 480, 640, 960]}
+    sizes={relacionado ? '(min-width: 1280px) 390px, (min-width: 768px) 33vw, 100vw' : '(min-width: 1280px) 290px, (min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw'}
+    transitionName={variante === 'catalogo' ? `foto-${p.slug}` : undefined}
+  />
+  {
+    variante === 'catalogo' ? (
+      <div class="etiqueta-sm mt-1 flex justify-between gap-3">
+        <span>{categoria}</span>
+        <span>Nº {p.num}</span>
+      </div>
+    ) : (
+      <span class="etiqueta-sm mt-1 text-[10px] md:text-[11px]">{categoria}</span>
+    )
+  }
+  <Titulo class="titular m-0 text-xl leading-[1.1] md:text-[27px]">{titulo}</Titulo>
+  {
+    !relacionado && (
+      <p class="m-0 hidden text-[15px] leading-[1.55] text-secundario sm:block">
+        <Txt t={resumen} />
+      </p>
+    )
+  }
+  {
+    variante === 'catalogo' && (
+      <span class="border-t border-profundo/25 pt-3 text-[13px] leading-snug text-marca">
+        <Txt t={formatosResumen(p)} />
+      </span>
+    )
+  }
+</a>

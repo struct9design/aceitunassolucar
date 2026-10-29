@@ -1,0 +1,303 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-oro: #fbd51b;
+  --color-marca: #3a6128;
+  --color-profundo: #1f3a14;
+  --color-crema: #fbf5e4;
+  --color-secundario: #2a4a1c;
+  --color-crema-claro: #e9e1c7;
+  --color-hueco: #efe4c2;
+
+  --font-titular: 'Gloock', Georgia, serif;
+  --font-sans: 'Jost', system-ui, sans-serif;
+
+  --ease-suave: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@layer base {
+  html {
+    background: var(--color-crema);
+    color: var(--color-profundo);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
+  }
+  body {
+    margin: 0;
+    overflow-x: clip;
+  }
+  a {
+    color: inherit;
+    text-underline-offset: 6px;
+  }
+  a:hover {
+    color: var(--color-marca);
+  }
+  h1,
+  h2,
+  h3 {
+    font-weight: 400;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-marca);
+    outline-offset: 3px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+@layer components {
+  .contenedor {
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: 20px;
+  }
+  @media (min-width: 768px) {
+    .contenedor {
+      padding-inline: 40px;
+    }
+  }
+
+  /* Etiquetas en mayúsculas: "Nº 01 — La casa" */
+  .etiqueta {
+    font: 500 12px/1 var(--font-sans);
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--color-marca);
+  }
+  .etiqueta-sm {
+    font: 500 11px/1 var(--font-sans);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-marca);
+  }
+
+  .titular {
+    font-family: var(--font-titular);
+    font-weight: 400;
+    text-wrap: balance;
+  }
+
+  /* Botones píldora */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    font: 500 15px/1 var(--font-sans);
+    letter-spacing: 0.04em;
+    padding: 20px 28px;
+    border-radius: 999px;
+    text-decoration: none;
+    border: 1px solid var(--color-profundo);
+    cursor: pointer;
+    transition:
+      background-color 0.25s,
+      color 0.25s,
+      border-color 0.25s;
+  }
+  .btn-primario {
+    background: var(--color-profundo);
+    color: var(--color-oro);
+  }
+  .btn-primario:hover {
+    background: var(--color-marca);
+    border-color: var(--color-marca);
+    color: var(--color-oro);
+  }
+  .btn-secundario {
+    background: transparent;
+    color: var(--color-profundo);
+  }
+  .btn-secundario:hover {
+    background: var(--color-profundo);
+    color: var(--color-oro);
+  }
+  .btn-oro {
+    background: var(--color-oro);
+    color: var(--color-profundo);
+    border-color: var(--color-oro);
+  }
+  .btn-oro:hover {
+    background: var(--color-crema);
+    border-color: var(--color-crema);
+    color: var(--color-profundo);
+  }
+
+  /* Píldoras de filtro / formato */
+  .pildora {
+    font: 500 14px/1 var(--font-sans);
+    padding: 0 20px;
+    height: 44px;
+    border-radius: 999px;
+    border: 1px solid var(--color-profundo);
+    background: transparent;
+    color: var(--color-profundo);
+    cursor: pointer;
+    transition:
+      background-color 0.25s,
+      color 0.25s;
+  }
+  .pildora:hover {
+    background: rgb(31 58 20 / 0.08);
+  }
+  .pildora[aria-pressed='true'] {
+    background: var(--color-profundo);
+    color: var(--color-oro);
+  }
+
+  /* Huecos de foto pendientes (rayado del diseño) */
+  .hueco {
+    background:
+      repeating-linear-gradient(135deg, rgb(58 97 40 / 0.13) 0 1px, transparent 1px 11px),
+      var(--color-hueco);
+  }
+  .hueco-oscuro {
+    background:
+      repeating-linear-gradient(135deg, rgb(251 213 27 / 0.14) 0 1px, transparent 1px 11px),
+      var(--color-secundario);
+  }
+
+  /* Doble filete de las fotos de producto */
+  .filete {
+    border: 1px solid var(--color-profundo);
+    outline: 1px solid var(--color-profundo);
+    outline-offset: -8px;
+  }
+  .filete-oro {
+    border: 1px solid rgb(251 213 27 / 0.4);
+    outline: 1px solid rgb(251 213 27 / 0.4);
+    outline-offset: 10px;
+  }
+
+  /* Romanos con contorno (Proceso) */
+  .romano-contorno {
+    font-family: var(--font-titular);
+    color: var(--color-oro);
+    -webkit-text-stroke: 1px var(--color-profundo);
+  }
+
+  /* Enlaces del menú: subrayado que crece */
+  .nav-enlace {
+    text-decoration: none;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0 1px;
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    padding-bottom: 3px;
+    transition: background-size 0.35s;
+  }
+  .nav-enlace:hover,
+  .nav-enlace[aria-current='page'] {
+    background-size: 100% 1px;
+    color: var(--color-profundo);
+  }
+
+  /* Campos de formulario (línea inferior) */
+  .campo {
+    font: 400 16px/1.4 var(--font-sans);
+    color: var(--color-profundo);
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--color-profundo);
+    padding: 12px 0;
+    min-height: 44px;
+    width: 100%;
+    border-radius: 0;
+    transition: border-color 0.25s;
+  }
+  .campo:focus {
+    outline: none;
+    border-bottom: 2px solid var(--color-marca);
+    margin-bottom: -1px;
+  }
+  select.campo {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%231F3A14' stroke-width='1.5'%3E%3Cpath d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 4px center;
+    padding-right: 24px;
+  }
+
+  /* Contenido pendiente [ENTRE CORCHETES]: visible a propósito */
+  .pendiente {
+    background: rgb(251 213 27 / 0.45);
+    box-shadow: 0 0 0 2px rgb(251 213 27 / 0.45);
+  }
+}
+
+/* ───── Animaciones ───── */
+
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes cinta {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.rayos {
+  animation: girar 160s linear infinite;
+  transform-origin: 50% 50%;
+}
+.sello {
+  animation: girar 40s linear infinite;
+  transform-origin: 50% 50%;
+}
+.cinta {
+  animation: cinta 45s linear infinite;
+}
+@media (max-width: 767px) {
+  .cinta {
+    animation-duration: 30s;
+  }
+}
+
+/* Tarjetas que suben 8px */
+.sube {
+  transition: transform 0.6s var(--ease-suave);
+}
+.sube:hover,
+.sube:focus-visible {
+  transform: translateY(-8px);
+}
+
+/* Aparición al hacer scroll: solo si hay JS (la clase la pone el script de cabecera) */
+html.js [data-aparece] {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.9s var(--ease-suave),
+    transform 0.9s var(--ease-suave);
+  transition-delay: var(--retardo, 0s);
+}
+html.js [data-aparece].visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rayos,
+  .sello,
+  .cinta {
+    animation: none;
+  }
+  .sube,
+  .sube:hover,
+  .sube:focus-visible {
+    transition: none;
+    transform: none;
+  }
+  html.js [data-aparece] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

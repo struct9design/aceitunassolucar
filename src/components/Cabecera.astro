@@ -1,0 +1,95 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/marca/logo.png';
+import sitio from '../data/sitio.json';
+
+const enlaces = [
+  { href: '/aceitunas/', texto: 'Aceitunas' },
+  { href: '/nuestra-historia/', texto: 'Nuestra historia' },
+  { href: '/del-olivo-a-la-mesa/', texto: 'Del olivo a la mesa' },
+  { href: '/profesionales/', texto: 'Profesionales' },
+  { href: '/profesionales/#contacto', texto: 'Contacto' },
+];
+
+const ruta = Astro.url.pathname;
+const actual = (href: string) => !href.includes('#') && ruta.startsWith(href);
+---
+
+<header class="contenedor relative z-20 py-3.5 md:py-[22px]" data-cabecera>
+  <div class="flex items-center justify-between gap-5">
+    <a href="/" class="flex items-center gap-3.5 no-underline" aria-label="Aceitunas Solúcar, inicio">
+      <Image src={logo} alt="" width={136} height={136} class="block size-[52px] md:size-[68px]" loading="eager" />
+      <span class="hidden text-[11px] leading-[1.3] font-medium tracking-[0.22em] text-profundo uppercase sm:block">
+        Desde 1964<br />Sanlúcar la Mayor
+      </span>
+    </a>
+
+    <nav aria-label="Principal" class="hidden gap-[30px] text-[15px] leading-none font-medium lg:flex">
+      {
+        enlaces.map((e) => (
+          <a href={e.href} class="nav-enlace" aria-current={actual(e.href) ? 'page' : undefined}>
+            {e.texto}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <a
+        href={sitio.portalUrl}
+        rel="noopener"
+        class="hidden rounded-full border border-profundo px-[18px] py-[13px] text-[13px] leading-none font-medium tracking-[0.08em] no-underline transition-colors hover:bg-profundo hover:text-oro sm:inline-block"
+      >
+        Acceso clientes
+      </a>
+      <button
+        type="button"
+        class="flex size-12 cursor-pointer items-center justify-center rounded-full border border-profundo bg-transparent lg:hidden"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        aria-controls="menu-movil"
+        data-menu-boton
+      >
+        <svg aria-hidden="true" width="20" height="12" viewBox="0 0 20 12" fill="none" stroke="#1F3A14" stroke-width="1.6">
+          <line x1="0" y1="1" x2="20" y2="1" data-l1></line>
+          <line x1="0" y1="6" x2="20" y2="6" data-l2></line>
+          <line x1="0" y1="11" x2="20" y2="11" data-l3></line>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <nav id="menu-movil" aria-label="Principal" class="mt-4 border-t border-profundo lg:hidden" hidden data-menu>
+    <ul class="m-0 list-none p-0">
+      {
+        enlaces.map((e) => (
+          <li class="border-b border-profundo/25">
+            <a
+              href={e.href}
+              class="block py-4 font-titular text-[26px] leading-tight no-underline"
+              aria-current={actual(e.href) ? 'page' : undefined}
+            >
+              {e.texto}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <a href={sitio.portalUrl} rel="noopener" class="btn btn-secundario mt-6 mb-2 w-full">Acceso clientes</a>
+  </nav>
+</header>
+
+<script>
+  function iniciarMenu() {
+    const boton = document.querySelector<HTMLButtonElement>('[data-menu-boton]');
+    const menu = document.querySelector<HTMLElement>('[data-menu]');
+    if (!boton || !menu) return;
+    boton.addEventListener('click', () => {
+      const abierto = boton.getAttribute('aria-expanded') === 'true';
+      boton.setAttribute('aria-expanded', String(!abierto));
+      boton.setAttribute('aria-label', abierto ? 'Abrir menú' : 'Cerrar menú');
+      menu.hidden = abierto;
+    });
+  }
+  document.addEventListener('astro:page-load', iniciarMenu);
+</script>

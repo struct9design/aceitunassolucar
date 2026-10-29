@@ -1,0 +1,10 @@
+---
+// Texto que resalta el contenido pendiente [ENTRE CORCHETES] para que se vea al revisar.
+interface Props {
+  t: string;
+}
+const escapar = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const html = escapar(Astro.props.t).replace(/\[[^\]]+\]/g, (m) => `<span class="pendiente">${m}</span>`);
+---
+
+<Fragment set:html={html} />

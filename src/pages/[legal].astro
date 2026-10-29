@@ -1,0 +1,23 @@
+---
+import type { GetStaticPaths } from 'astro';
+import Base from '../layouts/Base.astro';
+
+export const getStaticPaths = (() =>
+  [
+    { legal: 'aviso-legal', titulo: 'Aviso legal' },
+    { legal: 'privacidad', titulo: 'Política de privacidad' },
+    { legal: 'cookies', titulo: 'Política de cookies' },
+  ].map(({ legal, titulo }) => ({ params: { legal }, props: { titulo } }))) satisfies GetStaticPaths;
+
+const { titulo } = Astro.props;
+---
+
+<Base titulo={titulo} descripcion={`${titulo} de Aceitunas Solúcar.`}>
+  <section class="contenedor max-w-[860px] pt-12 pb-24 md:pt-24 md:pb-[140px]">
+    <p class="etiqueta mb-5 md:mb-7">Información legal</p>
+    <h1 class="titular mt-0 mb-10 text-[clamp(44px,6vw,88px)] leading-[0.98]">{titulo}</h1>
+    <p class="m-0 text-lg leading-relaxed text-secundario">
+      <span class="pendiente">[TEXTO LEGAL PENDIENTE: lo facilita la asesoría]</span>
+    </p>
+  </section>
+</Base>

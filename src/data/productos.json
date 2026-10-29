@@ -1,0 +1,431 @@
+[
+  {
+    "slug": "manzanilla-alinada-de-la-casa",
+    "nombre": "Manzanilla aliñada de la casa",
+    "categoria": "Aliñadas",
+    "resumen": "La receta con la que empezó la tienda en 1964.",
+    "descripcion": "La receta con la que empezó la tienda en 1964. Manzanilla sevillana con el aliño de la familia: [CONFIRMAR: describir el aliño en una frase].",
+    "variedad": "Manzanilla",
+    "origen": "Sevilla",
+    "ingredientes": "[COPIAR DE LA ETIQUETA]",
+    "alergenos": "[SEGÚN ETIQUETA]",
+    "conservacion": "Una vez abierto, en nevera y cubierta con su líquido.",
+    "formatos": [
+      {
+        "nombre": "Tarro",
+        "peso": "[g]",
+        "detalle": "Tarro de cristal · [PESO NETO] g"
+      },
+      {
+        "nombre": "Bolsa",
+        "peso": "[g]",
+        "detalle": "Bolsa · [PESO NETO] g"
+      },
+      {
+        "nombre": "Cubo hostelería",
+        "peso": "[kg]",
+        "detalle": "Cubo para hostelería · [PESO] kg · solo pedido profesional"
+      }
+    ],
+    "foto": "tarro-manzanilla-alinada",
+    "galeria": [
+      "plato-manzanilla-barro",
+      "plato-alinadas-oregano",
+      "alino-especias"
+    ],
+    "comoTomarla": {
+      "titular": "Fría, en cuenco de barro y con algo para mojar.",
+      "ideas": [
+        "Con una caña bien tirada o una copa de fino.",
+        "Picada en la ensaladilla o en unas papas aliñás.",
+        "Ensartada en una gilda con anchoa y guindilla."
+      ]
+    },
+    "destacado": true
+  },
+  {
+    "slug": "gordal-partida-alinada",
+    "nombre": "Gordal partida",
+    "categoria": "Aliñadas",
+    "resumen": "Grande y carnosa, partida para que el aliño llegue al hueso.",
+    "descripcion": "Gordal sevillana, grande y carnosa, partida para que el aliño llegue al hueso. [CONFIRMAR: describir el aliño en una frase].",
+    "variedad": "Gordal",
+    "origen": "Sevilla",
+    "ingredientes": "[COPIAR DE LA ETIQUETA]",
+    "alergenos": "[SEGÚN ETIQUETA]",
+    "conservacion": "Una vez abierto, en nevera y cubierta con su líquido.",
+    "formatos": [
+      {
+        "nombre": "Tarro",
+        "peso": "[g]",
+        "detalle": "Tarro · [PESO NETO] g"
+      },
+      {
+        "nombre": "Cubo hostelería",
+        "peso": "[kg]",
+        "detalle": "Cubo para hostelería · [PESO] kg · solo pedido profesional"
+      }
+    ],
+    "foto": "tarro-gordal-partida",
+    "galeria": [
+      "plato-alinadas-oregano",
+      "plato-manzanilla-barro"
+    ],
+    "destacado": true
+  },
+  {
+    "slug": "verdial-partida-alinada",
+    "nombre": "Verdial partida",
+    "categoria": "Aliñadas",
+    "resumen": "Verdial partida con el aliño de la casa.",
+    "descripcion": "Aceituna verdial partida y aliñada con las recetas de la familia. [CONFIRMAR: describir el aliño en una frase].",
+    "variedad": "Verdial",
+    "origen": "[CONFIRMAR]",
+    "ingredientes": "[COPIAR DE LA ETIQUETA]",
+    "alergenos": "[SEGÚN ETIQUETA]",
+    "conservacion": "Una vez abierto, en nevera y cubierta con su líquido.",
+    "formatos": [
+      {
+        "nombre": "Tarro",
+        "peso": "[g]",
+        "detalle": "Tarro · [PESO NETO] g"
+      },
+      {
+        "nombre": "Cubo hostelería",
+        "peso": "[kg]",
+        "detalle": "Cubo para hostelería · [PESO] kg · solo pedido profesional"
+      }
+    ],
+    "foto": "tarro-verdial-partida",
+    "galeria": [
+      "plato-manzanilla-barro"
+    ]
+  },
+  {
+    "slug": "gordal-rayada-alinada",
+    "nombre": "Gordal rayada",
+    "categoria": "Aliñadas",
+    "resumen": "Gordal rayada, aliñada al estilo de siempre.",
+    "descripcion": "Gordal rayada y aliñada al estilo de siempre. [CONFIRMAR: describir el aliño en una frase].",
+    "variedad": "Gordal",
+    "origen": "Sevilla",
+    "ingredientes": "[COPIAR DE LA ETIQUETA]",
+    "alergenos": "[SEGÚN ETIQUETA]",
+    "conservacion": "Una vez abierto, en nevera y cubierta con su líquido.",
+    "formatos": [
+      {
+        "nombre": "Tarro",
+        "peso": "[g]",
+        "detalle": "Tarro · [PESO NETO] g"
+      }
+    ],
+    "foto": "tarro-gordal-rayada",
+    "galeria": [
+      "plato-alinadas-oregano"
+    ]
+  },
+  {
+    "slug": "manzanilla-morada-alinada",
+    "nombre": "Manzanilla morada",
+    "categoria": "Aliñadas",
+    "resumen": "Manzanilla de color cambiante con el aliño de la casa.",
+    "descripcion": "Manzanilla de color cambiante, entre el verde y el morado, con el aliño de la casa. [CONFIRMAR: describir el aliño en una frase].",
+    "variedad": "Manzanilla",
+    "origen": "Sevilla",
+    "ingredientes": "[COPIAR DE LA ETIQUETA]",
+    "alergenos": "[SEGÚN ETIQUETA]",
+    "conservacion": "Una vez abierto, en nevera y cubierta con su líquido.",
+    "formatos": [
+      {
+        "nombre": "Tarro",
+        "peso": "[g]",
+        "detalle": "Tarro · [PESO NETO] g"
+      }
+    ],
+    "foto": "tarro-manzanilla-morada",
+    "galeria": [
+      "plato-morada"
+    ]
+  },
+  {
+    "slug": "chupadeo",
+    "nombre": "Chupadeo",
+    "categoria": "Aliñadas",
+    "resumen": "Nuestro aliño de chupadeo. [CONFIRMAR: descripción breve].",
+    "descripcion": "Nuestro aliño de chupadeo. [CONFIRMAR: variedad y descripción del aliño].",
+    "variedad": "[CONFIRMAR]",
+    "origen": "Sevilla",
+    "ingredientes": "[COPIAR DE LA ETIQUETA]",
+    "alergenos": "[SEGÚN ETIQUETA]",
+    "conservacion": "Una vez abierto, en nevera y cubierta con su líquido.",
+    "formatos": [
+      {
+        "nombre": "Tarro",
+        "peso": "[g]",
+        "detalle": "Tarro · [PESO NETO] g"
+      },
+      {
+        "nombre": "Garrafa",
+        "peso": "[kg]",
+        "detalle": "Garrafa · [PESO] kg"
+      }
+    ],
+    "foto": "tarro-chupadeo",
+    "galeria": []
+  },
+  {
+    "slug": "super-chupadeo",
+    "nombre": "Super chupadeo",
+    "categoria": "Aliñadas",
+    "resumen": "[CONFIRMAR: en qué se diferencia del chupadeo].",
+    "descripcion": "La versión más intensa de nuestro chupadeo. [CONFIRMAR: en qué se diferencia del chupadeo].",
+    "variedad": "[CONFIRMAR]",
+    "origen": "Sevilla",
+    "ingredientes": "[COPIAR DE LA ETIQUETA]",
+    "alergenos": "[SEGÚN ETIQUETA]",
+    "conservacion": "Una vez abierto, en nevera y cubierta con su líquido.",
+    "formatos": [
+      {
+        "nombre": "Tarro",
+        "peso": "[g]",
+        "detalle": "Tarro · [PESO NETO] g"
+      }
+    ],
+    "foto": "tarro-super-chupadeo",
+    "galeria": []
+  },
+  {
+    "slug": "de-la-abuela",
+    "nombre": "De la abuela",
+    "categoria": "Aliñadas",
+    "resumen": "La receta de la abuela. [CONFIRMAR: descripción breve].",
+    "descripcion": "La receta de la abuela de la familia. [CONFIRMAR: variedad y descripción del aliño].",
+    "variedad": "[CONFIRMAR]",
+    "origen": "Sevilla",
+    "ingredientes": "[COPIAR DE LA ETIQUETA]",
+    "alergenos": "[SEGÚN ETIQUETA]",
+    "conservacion": "Una vez abierto, en nevera y cubierta con su líquido.",
+    "formatos": [
+      {
+        "nombre": "Tarro",
+        "peso": "[g]",
+        "detalle": "Tarro · [PESO NETO] g"
+      }
+    ],
+    "foto": "tarro-de-la-abuela",
+    "galeria": []
+  },
+  {
+    "slug": "mojo-picon",
+    "nombre": "Mojo picón",
+    "categoria": "Aliñadas",
+    "resumen": "Aceituna en mojo picón, con su punto de picante.",
+    "descripcion": "Aceituna aliñada con mojo picón. [CONFIRMAR: variedad y nivel de picante].",
+    "variedad": "[CONFIRMAR]",
+    "origen": "Sevilla",
+    "ingredientes": "[COPIAR DE LA ETIQUETA]",
+    "alergenos": "[SEGÚN ETIQUETA]",
+    "conservacion": "Una vez abierto, en nevera y cubierta con su líquido.",
+    "formatos": [
+      {
+        "nombre": "Tarro",
+        "peso": "[g]",
+        "detalle": "Tarro · [PESO NETO] g"
+      }
+    ],
+    "foto": "tarro-mojo-picon",
+    "galeria": []
+  },
+  {
+    "slug": "manzanilla-fina-natural",
+    "nombre": "Manzanilla fina natural",
+    "categoria": "Al natural",
+    "resumen": "Manzanilla sin aliñar, para aliñarla a tu gusto.",
+    "descripcion": "Manzanilla fina sevillana en su salmuera, sin aliñar. [CONFIRMAR].",
+    "variedad": "Manzanilla",
+    "origen": "Sevilla",
+    "ingredientes": "[COPIAR DE LA ETIQUETA]",
+    "alergenos": "[SEGÚN ETIQUETA]",
+    "conservacion": "Una vez abierto, en nevera y cubierta con su líquido.",
+    "formatos": [
+      {
+        "nombre": "Tarro",
+        "peso": "[g]",
+        "detalle": "Tarro · [PESO NETO] g"
+      }
+    ],
+    "foto": "tarro-manzanilla-fina",
+    "galeria": [
+      "plato-manzanilla-natural"
+    ]
+  },
+  {
+    "slug": "manzanilla-deshuesada",
+    "nombre": "Manzanilla deshuesada",
+    "categoria": "Al natural",
+    "resumen": "Sin hueso, lista para la tapa o la ensalada.",
+    "descripcion": "Manzanilla sevillana deshuesada. [CONFIRMAR].",
+    "variedad": "Manzanilla",
+    "origen": "Sevilla",
+    "ingredientes": "[COPIAR DE LA ETIQUETA]",
+    "alergenos": "[SEGÚN ETIQUETA]",
+    "conservacion": "Una vez abierto, en nevera y cubierta con su líquido.",
+    "formatos": [
+      {
+        "nombre": "Tarro",
+        "peso": "[g]",
+        "detalle": "Tarro · [PESO NETO] g"
+      }
+    ],
+    "foto": "tarro-manzanilla-deshuesada",
+    "galeria": [
+      "plato-manzanilla-natural"
+    ]
+  },
+  {
+    "slug": "gordal-rellena-de-pimiento",
+    "nombre": "Gordal rellena de pimiento",
+    "categoria": "Rellenas",
+    "resumen": "Gordal deshuesada con tira de pimiento, y aliñada.",
+    "descripcion": "Gordal deshuesada, rellena de pimiento y aliñada con la receta de la casa. [CONFIRMAR].",
+    "variedad": "Gordal",
+    "origen": "Sevilla",
+    "ingredientes": "[COPIAR DE LA ETIQUETA]",
+    "alergenos": "[SEGÚN ETIQUETA]",
+    "conservacion": "Una vez abierto, en nevera y cubierta con su líquido.",
+    "formatos": [
+      {
+        "nombre": "Tarro",
+        "peso": "[g]",
+        "detalle": "Tarro · [PESO NETO] g"
+      }
+    ],
+    "foto": "tarro-gordal-rellena",
+    "galeria": [
+      "plato-gordal-rellena"
+    ]
+  },
+  {
+    "slug": "manzanilla-sabor-anchoa",
+    "nombre": "Manzanilla sabor anchoa",
+    "categoria": "Rellenas",
+    "resumen": "La de toda la vida para el aperitivo.",
+    "descripcion": "La clásica del aperitivo: manzanilla con sabor a anchoa. [CONFIRMAR].",
+    "variedad": "Manzanilla",
+    "origen": "Sevilla",
+    "ingredientes": "[COPIAR DE LA ETIQUETA]",
+    "alergenos": "[SEGÚN ETIQUETA]",
+    "conservacion": "Una vez abierto, en nevera y cubierta con su líquido.",
+    "formatos": [
+      {
+        "nombre": "Tarro",
+        "peso": "[g]",
+        "detalle": "Tarro · [PESO NETO] g"
+      }
+    ],
+    "foto": "tarro-manzanilla-anchoa",
+    "galeria": [
+      "salmuera-tarro"
+    ],
+    "destacado": true
+  },
+  {
+    "slug": "cocktel",
+    "nombre": "Cóctel",
+    "categoria": "Encurtidos",
+    "resumen": "Aceituna, pepinillo, cebolleta, zanahoria y pimiento, todo junto.",
+    "descripcion": "Mezcla de aceitunas y encurtidos para picar. [CONFIRMAR: composición exacta].",
+    "variedad": "Variantes",
+    "origen": "[CONFIRMAR]",
+    "ingredientes": "[COPIAR DE LA ETIQUETA]",
+    "alergenos": "[SEGÚN ETIQUETA]",
+    "conservacion": "Una vez abierto, en nevera y cubierto con su líquido.",
+    "formatos": [
+      {
+        "nombre": "Tarro",
+        "peso": "[g]",
+        "detalle": "Tarro · [PESO NETO] g"
+      }
+    ],
+    "foto": "tarro-cocktel",
+    "galeria": [
+      "plato-variantes"
+    ]
+  },
+  {
+    "slug": "banderillas",
+    "nombre": "Banderillas",
+    "categoria": "Encurtidos",
+    "resumen": "Pepinillo, cebolleta y guindilla: el aperitivo de barra.",
+    "descripcion": "Pepinillo, cebolleta, aceituna y guindilla ensartados en un palillo. [CONFIRMAR].",
+    "variedad": "Encurtidos",
+    "origen": "[CONFIRMAR]",
+    "ingredientes": "[COPIAR DE LA ETIQUETA]",
+    "alergenos": "[SEGÚN ETIQUETA]",
+    "conservacion": "Una vez abierto, en nevera y cubiertas con su líquido.",
+    "formatos": [
+      {
+        "nombre": "Tarro",
+        "peso": "[g]",
+        "detalle": "Tarro · [PESO NETO] g"
+      },
+      {
+        "nombre": "Cubo hostelería",
+        "peso": "[kg]",
+        "detalle": "Cubo para hostelería · [PESO] kg · solo pedido profesional"
+      }
+    ],
+    "foto": "plato-banderillas",
+    "galeria": [
+      "plato-banderillas-2"
+    ],
+    "destacado": true
+  },
+  {
+    "slug": "pepinillos",
+    "nombre": "Pepinillos",
+    "categoria": "Encurtidos",
+    "resumen": "Crujientes, en vinagre suave.",
+    "descripcion": "Pepinillos crujientes en vinagre suave. [CONFIRMAR].",
+    "variedad": "Pepinillo",
+    "origen": "[CONFIRMAR]",
+    "ingredientes": "[COPIAR DE LA ETIQUETA]",
+    "alergenos": "[SEGÚN ETIQUETA]",
+    "conservacion": "Una vez abierto, en nevera y cubiertos con su líquido.",
+    "formatos": [
+      {
+        "nombre": "Tarro",
+        "peso": "[g]",
+        "detalle": "Tarro · [PESO NETO] g"
+      }
+    ],
+    "foto": "tarro-pepinillos",
+    "galeria": [
+      "plato-pepinillos",
+      "plato-pepinillos-2"
+    ]
+  },
+  {
+    "slug": "alcaparron",
+    "nombre": "Alcaparrón",
+    "categoria": "Encurtidos",
+    "resumen": "El fruto de la alcaparra, con su rabito.",
+    "descripcion": "Alcaparrón en vinagre, con su rabito para cogerlo con los dedos. [CONFIRMAR].",
+    "variedad": "Alcaparrón",
+    "origen": "[CONFIRMAR]",
+    "ingredientes": "[COPIAR DE LA ETIQUETA]",
+    "alergenos": "[SEGÚN ETIQUETA]",
+    "conservacion": "Una vez abierto, en nevera y cubierto con su líquido.",
+    "formatos": [
+      {
+        "nombre": "Tarro",
+        "peso": "[g]",
+        "detalle": "Tarro · [PESO NETO] g"
+      }
+    ],
+    "foto": "tarro-alcaparron",
+    "galeria": [
+      "plato-alcaparrones"
+    ]
+  }
+]

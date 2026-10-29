@@ -1,0 +1,22 @@
+---
+// Cinta de variedades en bucle. La segunda copia es decorativa (aria-hidden).
+interface Props {
+  variedades: string[];
+}
+const { variedades } = Astro.props;
+---
+
+<div class="relative z-10 overflow-hidden bg-profundo py-4 text-oro md:py-[22px]">
+  <div class="cinta flex w-max gap-7 font-titular text-[22px] leading-none whitespace-nowrap md:gap-12 md:text-[30px]">
+    {
+      [false, true].map((copia) =>
+        variedades.map((v) => (
+          <>
+            <span aria-hidden={copia ? 'true' : undefined}>{v}</span>
+            <span aria-hidden="true">·</span>
+          </>
+        )),
+      )
+    }
+  </div>
+</div>

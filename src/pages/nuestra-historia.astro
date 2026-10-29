@@ -1,0 +1,128 @@
+---
+import Base from '../layouts/Base.astro';
+import Foto from '../components/Foto.astro';
+import Txt from '../components/Txt.astro';
+import mesa from '../assets/fotos/mesa-aperitivo.jpg';
+
+const cronologia = [
+  { anio: '1964', titulo: 'La tienda del pueblo', texto: 'Manuel y su mujer abren una pequeña tienda de aceitunas aliñadas en Sanlúcar la Mayor.' },
+  {
+    anio: '[AÑO]',
+    titulo: 'La segunda generación',
+    texto: '[CONFIRMAR CON LA FAMILIA: quién tomó el relevo y cuándo empezó el reparto a bares y tiendas.]',
+  },
+  { anio: '2024', titulo: 'Sesenta años', texto: 'Celebramos 60 años acompañando tus mejores momentos.' },
+  { anio: 'Hoy', titulo: 'La tercera generación', texto: 'Más de 200 puntos de venta con reparto diario, y las mismas recetas de la tienda.' },
+];
+
+const familia = [
+  { generacion: 'Primera generación', nombres: 'Manuel y [NOMBRE]' },
+  { generacion: 'Segunda generación', nombres: '[NOMBRES]' },
+  { generacion: 'Tercera generación', nombres: '[NOMBRES]' },
+];
+---
+
+<Base
+  titulo="Nuestra historia"
+  descripcion="En 1964 Manuel Rodríguez Gómez, tonelero, abrió con su mujer una tienda de aceitunas aliñadas en Sanlúcar la Mayor. Hoy la tercera generación sigue aliñando igual."
+  imagen={mesa}
+>
+  <section class="contenedor pt-12 pb-10 md:pt-24 md:pb-[72px]">
+    <p class="etiqueta mb-5 md:mb-7" data-aparece>Nuestra historia</p>
+    <h1 class="titular m-0 max-w-[1100px] text-[clamp(50px,7.4vw,120px)] leading-[0.95] tracking-[-0.02em]" data-aparece>
+      Tres generaciones aliñando en el Aljarafe.
+    </h1>
+  </section>
+
+  <section class="contenedor" data-aparece>
+    <!-- [FOTO PENDIENTE: panorámica del olivar del Aljarafe o fachada de Calle Zambullón. Mientras, un bodegón de la casa.] -->
+    <Foto
+      src={mesa}
+      alt="Mesa de aperitivo con aceitunas aliñadas, encurtidos, aceite y especias en cuencos de barro"
+      class="aspect-[4/3] md:aspect-[21/9]"
+      imgClass="object-[50%_60%]"
+      widths={[640, 960, 1280, 1920, 2400]}
+      sizes="(min-width: 1280px) 1200px, 100vw"
+      prioridad
+    />
+  </section>
+
+  <section class="contenedor grid gap-10 pt-20 pb-20 md:gap-[72px] md:pt-[140px] md:pb-[120px] lg:grid-cols-2">
+    <div data-aparece>
+      <p class="m-0 font-titular text-[clamp(30px,3.4vw,48px)] leading-[1.12]">
+        Manuel Rodríguez Gómez era tonelero. Conocía la madera, la salmuera y la paciencia que pide una buena aceituna.
+      </p>
+    </div>
+    <div class="flex flex-col gap-6 text-[17px] leading-[1.7] text-secundario md:text-lg" data-aparece>
+      <p class="m-0">
+        En 1964 abrió con su mujer una pequeña tienda en Sanlúcar la Mayor donde vendían aceitunas aliñadas a los vecinos del pueblo. Las recetas eran las de
+        casa: aliños sencillos, ingredientes que se reconocen y el tiempo que haga falta.
+      </p>
+      <p class="m-0">
+        Aquella tienda es hoy una empresa familiar que lleva la tercera generación y que reparte cada día a más de 200 supermercados, tiendas, bares y
+        restaurantes. Los aliños, en lo esencial, siguen siendo los mismos.
+      </p>
+    </div>
+  </section>
+
+  <section class="bg-profundo text-crema">
+    <div class="contenedor py-20 md:py-[120px]">
+      <p class="etiqueta mb-10 !text-oro md:mb-16">Cronología</p>
+      <ol class="m-0 flex list-none flex-col border-b border-oro/35 p-0">
+        {
+          cronologia.map((h) => (
+            <li class="grid gap-x-16 gap-y-6 border-t border-oro/35 py-10 md:grid-cols-2" data-aparece>
+              <span class="font-titular text-[clamp(64px,7vw,104px)] leading-[0.9] text-oro">
+                {h.anio === '1964' ? <span data-cuenta="1964" data-desde="1900">1964</span> : <Txt t={h.anio} />}
+              </span>
+              <div>
+                <h3 class="titular mt-0 mb-3 text-[30px]">{h.titulo}</h3>
+                <p class="m-0 max-w-[560px] text-[17px] leading-[1.65] text-crema-claro">
+                  <Txt t={h.texto} />
+                </p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="contenedor py-20 md:py-[140px]">
+    <div data-aparece>
+      <p class="etiqueta mb-[18px]">La familia</p>
+      <h2 class="titular mt-0 mb-10 text-[clamp(40px,4.6vw,68px)] leading-none md:mb-16">Las manos detrás del aliño</h2>
+    </div>
+    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        familia.map((f) => (
+          <figure class="m-0 flex flex-col gap-4" data-aparece>
+            <Foto alt={`Retrato: ${f.generacion.toLowerCase()} de la familia`} hueco="[FOTO DE FAMILIA]" class="aspect-[4/5]" />
+            <figcaption class="flex flex-col gap-1.5">
+              <span class="etiqueta-sm">{f.generacion}</span>
+              <span class="font-titular text-[26px]">
+                <Txt t={f.nombres} />
+              </span>
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="bg-oro">
+    <div class="contenedor flex flex-col items-center gap-9 py-20 text-center md:py-[120px]" data-aparece>
+      <svg aria-hidden="true" width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="#1F3A14" stroke-width="2" stroke-linecap="round">
+        <circle cx="32" cy="38" r="14"></circle><line x1="32" y1="6" x2="32" y2="16"></line><line x1="12" y1="14" x2="18" y2="21"></line><line
+          x1="52"
+          y1="14"
+          x2="46"
+          y2="21"></line><line x1="4" y1="32" x2="13" y2="33"></line><line x1="60" y1="32" x2="51" y2="33"></line>
+      </svg>
+      <p class="titular m-0 max-w-[980px] text-[clamp(36px,5vw,76px)] leading-[1.04]">
+        Mantener las recetas de siempre, con ingredientes de verdad, y llevarlas cada vez más lejos.
+      </p>
+      <a href="/aceitunas/" class="btn btn-primario">Ver nuestras aceitunas</a>
+    </div>
+  </section>
+</Base>

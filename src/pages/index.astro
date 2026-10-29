@@ -1,0 +1,237 @@
+---
+import Base from '../layouts/Base.astro';
+import Cabecera from '../components/Cabecera.astro';
+import Cinta from '../components/Cinta.astro';
+import Foto from '../components/Foto.astro';
+import Rayos from '../components/Rayos.astro';
+import Sello from '../components/Sello.astro';
+import TarjetaProducto from '../components/TarjetaProducto.astro';
+import { productos } from '../lib/catalogo';
+import portada from '../assets/fotos/portada-manzanilla-barro.jpg';
+import logo from '../assets/marca/logo.png';
+import sitio from '../data/sitio.json';
+
+const porSlug = (s: string) => productos.find((p) => p.slug === s)!;
+// Las cuatro tarjetas del diseño; la última lleva al catálogo filtrado por encurtidos.
+const destacados = [
+  { producto: porSlug('manzanilla-alinada-de-la-casa') },
+  { producto: porSlug('gordal-partida-alinada') },
+  { producto: porSlug('manzanilla-sabor-anchoa') },
+  {
+    producto: porSlug('banderillas'),
+    titulo: 'Banderillas y encurtidos',
+    href: '/aceitunas/?tipo=encurtidos',
+  },
+];
+
+const principios = [
+  { n: 'I', titulo: 'Recetas de siempre', texto: 'Los mismos aliños con los que empezó la tienda en 1964. Sin atajos ni modas.' },
+  { n: 'II', titulo: 'Ingredientes de verdad', texto: 'Ni extractos ni potenciadores de sabor. Lo que lleva el aliño es lo que se ve en el tarro.' },
+  { n: 'III', titulo: 'Reparto cada día', texto: 'Llegamos a diario a más de 200 supermercados, tiendas, bares y restaurantes.' },
+];
+
+const pasos = [
+  { nombre: 'Verdeo', texto: 'La aceituna se recoge en verde, a finales del verano.' },
+  { nombre: 'Endulzado', texto: 'Se le quita el amargor natural antes de curarla.' },
+  { nombre: 'Salmuera', texto: 'Reposa en salmuera hasta coger su punto.' },
+  { nombre: 'Aliño', texto: 'Cada variedad recibe su aliño de la casa y se envasa.' },
+];
+
+const d = sitio.direccion;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: 'Aceitunas Solúcar',
+  description: 'Aceitunas de mesa y encurtidos aliñados con recetas familiares en Sanlúcar la Mayor (Sevilla) desde 1964.',
+  url: Astro.site?.href,
+  logo: new URL(logo.src, Astro.site).href,
+  email: sitio.email,
+  ...(!sitio.telefono.includes('[') && { telephone: `+34 ${sitio.telefono}` }),
+  foundingDate: '1964',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: d.calle,
+    postalCode: d.cp,
+    addressLocality: d.localidad,
+    addressRegion: d.provincia,
+    addressCountry: 'ES',
+  },
+};
+---
+
+<Base
+  titulo="Aceitunas Solúcar"
+  descripcion="Aceitunas aliñadas y encurtidos de Sanlúcar la Mayor (Sevilla) con las recetas de la familia desde 1964. Sin extractos ni potenciadores de sabor. Reparto diario a más de 200 puntos de venta."
+  cabeceraPropia
+  pieCompleto
+  jsonLd={jsonLd}
+>
+  <!-- PORTADA (oro) -->
+  <section class="relative overflow-hidden bg-oro">
+    <Cabecera />
+
+    <div class="contenedor grid items-end gap-12 pt-7 md:pt-10 lg:grid-cols-2">
+      <div class="lg:pb-24">
+        <p class="etiqueta mb-[18px] text-[11px] md:mb-7 md:text-xs" data-aparece>Aceitunas de mesa sevillanas · Aljarafe</p>
+        <h1
+          class="titular m-0 text-[46px] leading-[0.98] tracking-[-0.015em] md:text-[clamp(52px,6.6vw,106px)] md:leading-[0.96] md:tracking-[-0.02em]"
+          data-aparece
+        >
+          Aliños de toda la vida, con ingredientes de verdad.
+        </h1>
+        <p class="mt-5 mb-0 max-w-[470px] text-base leading-[1.55] text-secundario md:mt-8 md:text-[19px]" data-aparece>
+          Aceitunas y encurtidos con las recetas de la familia, sin extractos ni potenciadores de sabor. Así desde que abrimos la tienda en Sanlúcar la
+          Mayor.
+        </p>
+        <div class="mt-7 flex flex-wrap items-center gap-7 md:mt-10" data-aparece>
+          <a href="/aceitunas/" class="btn btn-primario w-full sm:w-auto">Ver nuestras aceitunas</a>
+          <a href="/nuestra-historia/" class="text-[15px] leading-none font-medium">Conoce a la familia</a>
+        </div>
+      </div>
+
+      <div class="relative flex min-h-[420px] items-end justify-center md:min-h-[640px]">
+        <Rayos class="absolute top-0 left-1/2 size-[520px] -translate-x-1/2 md:top-2.5 md:size-[760px]" />
+        <Foto
+          src={portada}
+          alt="Cuenco de barro con manzanilla aliñada con pimiento, ajo y orégano"
+          class="h-[400px] w-full max-w-[540px] md:h-[620px]"
+          widths={[400, 600, 800, 1080, 1400]}
+          sizes="(min-width: 1024px) 540px, 100vw"
+          prioridad
+        />
+        <Sello class="absolute top-[120px] left-[4%] hidden size-[150px] md:block" />
+      </div>
+    </div>
+
+    <Cinta variedades={['Manzanilla', 'Gordal', 'Hojiblanca', 'Aliño de la casa', 'Rellenas', 'Encurtidos']} />
+  </section>
+
+  <!-- Nº 01 LA CASA -->
+  <section class="contenedor pt-[72px] pb-14 md:pt-[140px] md:pb-[120px]">
+    <div class="grid items-start gap-9 md:gap-16 lg:grid-cols-2">
+      <div data-aparece>
+        <p class="etiqueta mb-4 md:mb-6">Nº 01 — La casa</p>
+        <p class="m-0 font-titular text-[30px] leading-[1.12] text-pretty md:text-[clamp(34px,3.6vw,52px)] md:leading-[1.1]">
+          Empezó como una pequeña tienda de aceitunas aliñadas en el pueblo. Tres generaciones después, seguimos aliñando igual.
+        </p>
+      </div>
+      <ol class="m-0 list-none border-b border-profundo p-0">
+        {
+          principios.map((p) => (
+            <li class="grid grid-cols-[36px_1fr] gap-4 border-t border-profundo py-[18px] md:grid-cols-[64px_1fr] md:py-7" data-aparece>
+              <span class="font-titular text-[22px] text-marca md:text-[28px]">{p.n}</span>
+              <div>
+                <h3 class="m-0 font-sans text-base leading-snug font-semibold md:mb-2 md:text-lg">{p.titulo}</h3>
+                <p class="m-0 hidden text-base leading-relaxed text-secundario md:block">{p.texto}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- Nº 02 PRODUCTOS -->
+  <section class="contenedor pb-[72px] md:pb-[140px]">
+    <div class="mb-7 flex flex-wrap items-end justify-between gap-6 md:mb-14" data-aparece>
+      <div>
+        <p class="etiqueta mb-3.5 md:mb-[18px]">Nº 02 — Nuestras aceitunas</p>
+        <h2 class="titular m-0 text-[40px] leading-none tracking-[-0.01em] md:text-[clamp(40px,4.6vw,68px)]">De la orza a tu mesa</h2>
+      </div>
+      <a href="/aceitunas/" class="hidden text-[15px] leading-none font-medium md:inline">Ver el catálogo completo</a>
+    </div>
+    <div class="grid grid-cols-2 gap-x-3.5 gap-y-6 md:gap-8 lg:grid-cols-4">
+      {destacados.map((d) => <TarjetaProducto variante="inicio" {...d} />)}
+    </div>
+    <a href="/aceitunas/" class="btn btn-secundario mt-8 w-full md:hidden">Ver el catálogo completo</a>
+  </section>
+
+  <!-- Nº 03 ORIGEN -->
+  <section class="bg-profundo text-crema">
+    <div class="contenedor grid items-center gap-6 py-[72px] md:gap-[72px] md:py-[140px] lg:grid-cols-2">
+      <div class="relative" data-aparece>
+        <Foto
+          alt="Foto de archivo de la tienda en los años 60"
+          hueco="Foto de archivo · la tienda en los años 60"
+          oscuro
+          class="filete-oro aspect-[4/5] !items-start"
+        />
+        <p
+          class="m-0 mt-2 text-right font-titular text-8xl leading-none text-oro md:absolute md:-right-6 md:-bottom-16 md:mt-0 md:text-[clamp(110px,13vw,200px)]"
+        >
+          <span data-cuenta="1964" data-desde="1900">1964</span>
+        </p>
+      </div>
+      <div data-aparece>
+        <p class="etiqueta mb-6 !text-oro">Nº 03 — El origen</p>
+        <h2 class="titular m-0 text-[34px] leading-[1.06] md:text-[clamp(38px,4.2vw,62px)] md:leading-[1.04]">
+          Un tonelero, su mujer y una tienda de aceitunas.
+        </h2>
+        <p class="mt-5 mb-0 max-w-[520px] text-base leading-[1.65] text-crema-claro md:mt-8 md:text-lg">
+          Manuel Rodríguez Gómez era tonelero de oficio. En 1964 abrió con su mujer una pequeña tienda de aceitunas aliñadas en Sanlúcar la Mayor, en pleno
+          Aljarafe sevillano. Hoy es la tercera generación de la familia la que sigue al frente.
+        </p>
+        <a href="/nuestra-historia/" class="mt-7 inline-block text-[15px] leading-none font-medium text-oro hover:text-crema md:mt-10">
+          Leer nuestra historia
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Nº 04 PROCESO -->
+  <section class="contenedor py-[72px] md:py-[140px]">
+    <div data-aparece>
+      <p class="etiqueta mb-[18px]">Nº 04 — Del olivo a la mesa</p>
+      <h2 class="titular mt-0 mb-12 max-w-[760px] text-[40px] leading-none tracking-[-0.01em] md:mb-[72px] md:text-[clamp(40px,4.6vw,68px)]">
+        Una aceituna aliñada se hace sin prisa
+      </h2>
+    </div>
+    <div class="relative">
+      <div aria-hidden="true" class="absolute top-[11px] right-0 left-0 hidden border-t border-dashed border-marca lg:block"></div>
+      <ol class="relative m-0 grid list-none gap-10 p-0 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          pasos.map((p, i) => (
+            <li class="flex flex-col gap-4" data-aparece>
+              <span
+                aria-hidden="true"
+                class:list={['size-[22px] rounded-full border border-profundo', i === pasos.length - 1 ? 'bg-profundo' : 'bg-oro']}
+              />
+              <span class="font-titular text-[30px]">{p.nombre}</span>
+              <span class="text-base leading-relaxed text-secundario">{p.texto}</span>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+    <a href="/del-olivo-a-la-mesa/" class="mt-14 inline-block text-[15px] leading-none font-medium">Ver el proceso completo</a>
+  </section>
+
+  <!-- Nº 05 DÓNDE -->
+  <section class="bg-oro">
+    <div class="contenedor grid items-center gap-7 py-16 md:gap-16 md:py-[120px] lg:grid-cols-2">
+      <div data-aparece>
+        <p class="etiqueta mb-[18px] !text-profundo">Nº 05 — Dónde encontrarnos</p>
+        <p class="m-0 font-titular text-[120px] leading-[0.85] md:text-[clamp(120px,15vw,220px)]">
+          <span data-cuenta="200" data-prefijo="+">+200</span>
+        </p>
+        <p class="mt-3.5 mb-0 font-titular text-2xl leading-tight md:mt-5 md:text-[30px]">puntos de venta, con reparto diario.</p>
+      </div>
+      <div data-aparece>
+        <ul class="m-0 list-none border-b border-profundo p-0">
+          {
+            ['Supermercados', 'Tiendas de alimentación', 'Bares y restaurantes'].map((t, i) => (
+              <li class="flex justify-between gap-4 border-t border-profundo py-[18px] text-lg leading-snug font-medium md:py-[22px] md:text-xl">
+                <span>{t}</span>
+                <span class="font-titular">{['I', 'II', 'III'][i]}</span>
+              </li>
+            ))
+          }
+        </ul>
+        <div class="mt-9 flex flex-wrap gap-4">
+          <a href="/profesionales/" class="btn btn-primario w-full sm:w-auto">Quiero vender Solúcar</a>
+          <a href="/profesionales/#donde" class="btn btn-secundario w-full sm:w-auto">Dónde comprar</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,15 @@
+{
+  "nombre": "Aceitunas Solúcar",
+  "lema": "Aliños de toda la vida, desde 1964.",
+  "portalUrl": "https://pedidos.[dominio]",
+  "email": "info@aceitunassolucar.com",
+  "telefono": "954 000 000",
+  "horario": "[HORARIO]",
+  "direccion": {
+    "calle": "Calle Zambullón, 37",
+    "cp": "41800",
+    "localidad": "Sanlúcar la Mayor",
+    "provincia": "Sevilla"
+  },
+  "formularioAction": ""
+}
